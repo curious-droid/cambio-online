@@ -76,7 +76,21 @@ const Lobby = () => {
 
     return (
         <div className="lobby">
-            <h1>Welcome to Cambio Online!</h1>
+        <div style={{ textAlign: 'center', position: 'relative' }}>
+            <h1 style={{ display: 'inline-block', margin: 0 }}>Welcome to Cambio Online!</h1>
+            <span style={{
+                color: '#4caf50',
+                fontWeight: 'bold',
+                fontSize: '1em',
+                marginLeft: '8px',
+                position: 'absolute',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                // right: '-60px', // Adjust as needed to place to the right of the centered text
+            }}>
+                [beta+]
+            </span>
+        </div>
             <h3>Signed in as: {username}</h3>
             <div>
                 <button onClick={handleSignOut}>Sign Out</button>

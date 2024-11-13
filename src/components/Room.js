@@ -569,7 +569,21 @@ const Room = () => {
         <div className="room">
             {roomData.Status === 'open' ? (
                 <div>
-                    <h1>Cambio Online</h1>
+                <div style={{ textAlign: 'center', position: 'relative' }}>
+                    <h1 style={{ display: 'inline-block', margin: 0 }}>Cambio Online</h1>
+                    <span style={{
+                        color: '#4caf50',
+                        fontWeight: 'bold',
+                        fontSize: '1em',
+                        marginLeft: '8px',
+                        position: 'absolute',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        // right: '-60px', // Adjust as needed to place to the right of the centered text
+                    }}>
+                        [beta+]
+                    </span>
+                </div>
                     <h2>Room: {roomData.Name} ({roomData.UUID})</h2>
                     <h3>Players: ({roomData.Players.length}/6)</h3>
                     <div>
