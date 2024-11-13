@@ -144,7 +144,7 @@ const Room = () => {
                         startBurn();
                     }
                 } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count}, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) !== 0) {
                         setGameState('lookSwap');
                     }
                     else {
@@ -376,7 +376,7 @@ const Room = () => {
             }
             else if (!roomData.FinishedBurning[roomData.Players.indexOf(username)]) {
                 setGameState('burn');
-                if(roomData.CambioCaller === username){
+                if (roomData.CambioCaller === username) {
                     handleBurn();
                     // roomData.FinishedBurning[roomData.Players.indexOf(username)] = false;
                     // updateDoc(doc(db, 'rooms', roomId), {
@@ -418,11 +418,11 @@ const Room = () => {
         }
     }, [roomData, gameState]);
 
-    const leave = async () =>{
+    const leave = async () => {
         console.log(username);
         const userDoc = doc(db, 'users', username);
         const userData = await getDoc(userDoc);
-        updateDoc(userDoc, { Games: userData.data().Games.filter((game) => game.id !== roomId)});
+        updateDoc(userDoc, { Games: userData.data().Games.filter((game) => game.id !== roomId) });
     }
 
     useEffect(() => {
@@ -569,22 +569,25 @@ const Room = () => {
         <div className="room">
             {roomData.Status === 'open' ? (
                 <div>
-                <div style={{ textAlign: 'center', position: 'relative' }}>
-                    <h1 style={{ display: 'inline-block', margin: 0 }}>Cambio Online</h1>
-                    <span style={{
-                        color: '#4caf50',
-                        fontWeight: 'bold',
-                        fontSize: '1em',
-                        marginLeft: '8px',
-                        position: 'absolute',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        // right: '-60px', // Adjust as needed to place to the right of the centered text
-                    }}>
-                        [beta+]
-                    </span>
-                </div>
+                    <div style={{ textAlign: 'center', position: 'relative' }}>
+                        <h1 style={{ display: 'inline-block', margin: 0 }}>Cambio Online</h1>
+                        <span style={{
+                            color: '#4caf50',
+                            fontWeight: 'bold',
+                            fontSize: '1em',
+                            marginLeft: '8px',
+                            position: 'absolute',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            // right: '-60px', // Adjust as needed to place to the right of the centered text
+                        }}>
+                            [beta+]
+                        </span>
+                    </div>
                     <h2>Room: {roomData.Name} ({roomData.UUID})</h2>
+                    <h3>
+                        Join Code: <span style={{ color: '#4caf50' }}>{roomData.UUID}</span>
+                    </h3>
                     <h3>Players: ({roomData.Players.length}/6)</h3>
                     <div>
                         <ul style={{ listStylePosition: 'inside', paddingLeft: '0px' }}>
