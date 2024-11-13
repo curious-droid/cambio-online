@@ -356,17 +356,29 @@ const Room = () => {
             }
 
             if (roomData.CurrentPlayer === username && roomData.CambioCalled && roomData.CambioCaller === username) {
-
                 const scores = roomData.PlayerHands.map(player =>
                     player.cards.reduce((total, card) => total + value(card), 0)
                 );
                 const minScore = Math.min(...scores);
-                const winnerIndex = scores.indexOf(minScore);
+                const minScoreIndices = scores
+                    .map((score, index) => (score === minScore ? index : -1))
+                    .filter(index => index !== -1);
+                
+                const cambioCallerIndex = roomData.Players.indexOf(roomData.CambioCaller);
+                
+                let winnerIndex = minScoreIndices.reduce((closestIndex, currentIndex) => {
+                    const closestDistance = (closestIndex - cambioCallerIndex + roomData.Players.length) % roomData.Players.length;
+                    const currentDistance = (currentIndex - cambioCallerIndex + roomData.Players.length) % roomData.Players.length;
+                    return currentDistance < closestDistance ? currentIndex : closestIndex;
+                }, minScoreIndices[0]);
+                
+                
                 updateDoc(doc(db, 'rooms', roomId), {
                     LastWinner: roomData.Players[winnerIndex],
                     GameLog: [...roomData.GameLog, `${roomData.Players[winnerIndex]} won the game!`],
                     Status: 'ended'
                 });
+                
                 return;
             }
 
