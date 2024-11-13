@@ -18,7 +18,7 @@ const Auth = () => {
         async function signIN() {
             try {
                 const success = await autoSignIn(setUsername);
-                if (success) {
+                if ((username && username !== '') && success) {
                     if (roomId) {
                         await joinRoom(roomId, username);
                         navigate(`/room/${roomId}`);

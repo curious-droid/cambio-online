@@ -106,7 +106,7 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: cardIndex * 0.5 }}
                                         style={{
-                                            fontSize: '1rem',
+                                            fontSize: '1.5rem',
                                             padding: '5px',
                                             backgroundColor: '#444',
                                             color: '#eaeaea',
@@ -114,6 +114,7 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
                                             marginBottom: '8px',
                                             textAlign: 'center',
                                             width: '100%',
+                                            height: '50px',
                                         }}
                                         // onAnimationComplete={shaky}
                                     >

@@ -18,6 +18,9 @@ export const autoSignIn = async (setUsername) => {
 }
 
 export const signUp = async (username, password, setUsername) => {
+    if(username === ''){
+        return false;
+    }
     const userDoc = doc(db, 'users', username);
     const userSnap = await getDoc(userDoc);
     if (userSnap.exists()) throw new Error('Username already exists');
@@ -27,6 +30,9 @@ export const signUp = async (username, password, setUsername) => {
 };
 
 export const signIn = async (username, password, setUsername) => {
+    if(username === ''){
+        return false;
+    }
     const userDoc = doc(db, 'users', username);
     const userSnap = await getDoc(userDoc);
     const userData = userSnap.data();

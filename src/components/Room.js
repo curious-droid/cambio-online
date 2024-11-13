@@ -12,7 +12,7 @@ import { SiHackaday } from 'react-icons/si';
 import { IoEllipseSharp } from 'react-icons/io5';
 import EndGameScreen from './EndGameScreen';
 import { motion } from 'framer-motion';
-import{ numberToCard} from '../utils.js';
+import { numberToCard } from '../utils.js';
 
 const Room = () => {
     const { username, setUsername } = useContext(UserContext);
@@ -72,15 +72,19 @@ const Room = () => {
     };
 
     const startBurn = async () => {
+        let burn = Array(roomData.Players.length).fill(false);
+        if(roomData.CambioCaller === username){
+            burn[roomData.Players.indexOf(username)] = false;
+        }
         updateDoc(doc(db, 'rooms', roomId), {
-            FinishedBurning: Array(roomData.Players.length).fill(false),
+            FinishedBurning: burn,
             BurnPhase: true
         });
         setGameState('burn');
     }
 
     async function handleGameState() {
-        if(!roomData){
+        if (!roomData) {
             return;
         }
         // console.log('Handling gameState:', gameState);
@@ -119,15 +123,33 @@ const Room = () => {
                 const suitIndex = Math.floor((discarded - 1) / 13);
 
                 if (rankIndex === 6 || rankIndex === 7) {
-                    if(roomData.PlayerHands[roomData.Players.indexOf(username)].cards.length !== 0){
+                    if (roomData.PlayerHands[roomData.Players.indexOf(username)].cards.length !== 0) {
                         setGameState('peekSelf');
                     }
+                    else {
+                        startBurn();
+                    }
                 } else if (rankIndex === 8 || rankIndex === 9) {
-                    setGameState('peekOther');
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(username) ? count + playerHand.cards.length : count; }, 0) !== 0) {
+                        setGameState('peekOther');
+                    }
+                    else {
+                        startBurn();
+                    }
                 } else if (rankIndex === 10 || rankIndex === 11) {
-                    setGameState('swap');
+                    if (roomData.PlayerHands.reduce((count, playerHand) => { return count + playerHand.cards.length }, 0) !== 0) {
+                        setGameState('swap');
+                    }
+                    else {
+                        startBurn();
+                    }
                 } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
-                    setGameState('lookSwap');
+                    if (roomData.PlayerHands.reduce((count, playerHand) => { return count + playerHand.cards.length }, 0) !== 0) {
+                        setGameState('lookSwap');
+                    }
+                    else {
+                        startBurn();
+                    }
                 } else {
                     startBurn();
                 }
@@ -268,7 +290,7 @@ const Room = () => {
     }, [selected, gameState, setGameState]);
 
     const onSwap = async () => {
-        if(!roomData){
+        if (!roomData) {
             return;
         }
         setFlippedCards([]);
@@ -352,12 +374,18 @@ const Room = () => {
             }
             else if (!roomData.FinishedBurning[roomData.Players.indexOf(username)]) {
                 setGameState('burn');
+                if(roomData.CambioCaller === username){
+                    roomData.FinishedBurning[roomData.Players.indexOf(username)] = false;
+                    updateDoc(doc(db, 'rooms', roomId), {
+                        FinishedBurning: roomData.FinishedBurning
+                    });
+                }
             }
             else if (((!roomData.FinishedBurning.includes(false)) && (gameState === 'locked' && !roomData.BurnPhase)) && roomData.CurrentPlayer === username) {
                 if (roomData.DrawnCard === 0) {
                     setWaitDraw(true);
                 }
-                else{
+                else {
                     setWaitDraw(false);
                     setGameState('draw');
                 }
@@ -387,34 +415,34 @@ const Room = () => {
         }
     }, [roomData, gameState]);
 
-    
-useEffect(() => {
-    if (!username) return; // Wait until username is set
-    const roomRef = doc(db, 'rooms', roomId);
-    const unsubscribe = onSnapshot(roomRef, (doc) => {
-        if (!doc.exists()) {
-            navigate('/');
-            return;
-        }
 
-        const newRoomData = doc.data();
-        
-        // Check if CambioCalled changed from false to true
-        if (previousCambioCalled.current === false && newRoomData.CambioCalled) {
-            shaky(); // Trigger shake effect
-        }
+    useEffect(() => {
+        if (!username) return; // Wait until username is set
+        const roomRef = doc(db, 'rooms', roomId);
+        const unsubscribe = onSnapshot(roomRef, (doc) => {
+            if (!doc.exists()) {
+                navigate('/');
+                return;
+            }
 
-        // Update previousCambioCalled to reflect the current state
-        previousCambioCalled.current = newRoomData.CambioCalled;
-        
-        setRoomData(newRoomData);
-    });
+            const newRoomData = doc.data();
 
-    return () => unsubscribe();
-}, [roomId, navigate, username]);
+            // Check if CambioCalled changed from false to true
+            if (previousCambioCalled.current === false && newRoomData.CambioCalled) {
+                shaky(); // Trigger shake effect
+            }
+
+            // Update previousCambioCalled to reflect the current state
+            previousCambioCalled.current = newRoomData.CambioCalled;
+
+            setRoomData(newRoomData);
+        });
+
+        return () => unsubscribe();
+    }, [roomId, navigate, username]);
 
     const handleDraw = () => {
-        if(waitDraw){
+        if (waitDraw) {
             setGameState('draw');
             setWaitDraw(false);
             cardDraw();
@@ -435,7 +463,7 @@ useEffect(() => {
 
     const startGame = async () => {
         if (roomData && roomData.Host === username) {
-            if(roomData.Players.length < 2){
+            if (roomData.Players.length < 2) {
                 alert('Must have at least two players to start game.')
                 return;
             }
@@ -525,7 +553,7 @@ useEffect(() => {
                 GameLog: [...roomData.GameLog, `${username} called Cambio!`]
             });
         }
-    };    
+    };
 
     return (
         <div className="room">

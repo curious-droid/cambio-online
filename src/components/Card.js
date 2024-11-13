@@ -216,8 +216,8 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
                 justifyContent: 'center',
                 alignItems: 'center',
                 fontSize: '0.9rem',
-                border: selected.includes(number) ? '3px blue' : (playerWhoHas() === CambioCaller ? '3px red':'1px black'),
-                borderStyle: (number === 0 || (discard.includes(number) || (playerWhoHas() === CambioCaller))) ? 'dashed' : 'solid',
+                border: (selected.includes(number) ? '3px blue ' : ((playerWhoHas() === CambioCaller) ? '3px red ':'1px black ')) + ((number === 0 || (discard.includes(number) || (playerWhoHas() === CambioCaller))) ? 'dashed' : 'solid'),
+                // borderStyle: (number === 0 || (discard.includes(number) || (playerWhoHas() === CambioCaller))) ? 'dashed' : 'solid',
                 cursor: canClick() ? 'pointer' : 'not-allowed',
             }}
             whileHover={{ scale: 1.05 }}

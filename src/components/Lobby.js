@@ -26,7 +26,7 @@ const Lobby = () => {
         signIN();
 
         // Only proceed if username is defined
-        if (!username) return;
+        if (!username && username === '') return;
 
         const fetchUserGames = async () => {
             const userDocRef = doc(db, 'users', username);
