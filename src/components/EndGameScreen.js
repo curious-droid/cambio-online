@@ -10,6 +10,9 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
     const navigate = useNavigate();
 
     const value = (number) => {
+        if (number === -1) {
+            return 0;
+        }
         const rankIndex = (number - 1) % 13;
         const suitIndex = Math.floor((number - 1) / 13);
 
@@ -96,14 +99,14 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
                             <h3>{roomData.Players[index]}</h3>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 {player.cards.map((card, cardIndex) => (
-                                    <motion.div
+                                    (card !== -1 && <motion.div
                                         key={cardIndex}
                                         className="card"
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: cardIndex * 0.5 }}
                                         style={{
-                                            fontSize: '1.5rem',
+                                            fontSize: '1rem',
                                             padding: '5px',
                                             backgroundColor: '#444',
                                             color: '#eaeaea',
@@ -115,7 +118,7 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
                                         // onAnimationComplete={shaky}
                                     >
                                         {numberToCard(card)}
-                                    </motion.div>
+                                    </motion.div>)
                                 ))}
                                 <motion.div
                                     className="score"
