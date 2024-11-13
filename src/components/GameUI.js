@@ -51,7 +51,7 @@ const GameUI = ({ username, roomName, roomUUID, playerHands, flippedCards, disca
 
       <div className="main-game">
         <div className="game-log">
-          <div>{gameState === 'locked' ? 'Waiting...' : waitDraw ? ('Draw a card.') : gameState === 'draw' ? 'Replace or Discard' : gameState === 'peekSelf' ? 'Look at your own card' : gameState === 'peekOther' ? 'Look at another player\'s card' : gameState === 'swap' ? 'Swap two cards' : gameState === 'lookSwap' ? 'Look at two cards and choose to swap.' : gameState === 'burn' ? (giveBurn ? `Give a card to ${burnReceiver}.` : 'Burn cards.') : ''}</div>
+          <div>{waitDraw ? ('Draw a card.') : gameState === 'draw' ? 'Replace or Discard.' : gameState === 'peekSelf' ? 'Look at your own card.' : gameState === 'peekOther' ? 'Look at another player\'s card.' : gameState === 'swap' ? 'Swap two cards.' : gameState === 'lookSwap' ? 'Look at two cards and choose to swap.' : gameState === 'burn' ? (giveBurn ? `Give a card to ${burnReceiver}.` : 'Burn cards.') : gameState === 'locked' ? 'Waiting...' : ''}</div>
           <div className="log-messages">
             {GameLog && GameLog.length > 0
               ? GameLog.map((message, index) => (

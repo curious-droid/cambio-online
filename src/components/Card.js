@@ -200,7 +200,7 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
             onClick={() => {
                 handleClick();
             }}
-            animate={{ x: window.innerWidth / 2000 * calcX() - 30, y: window.innerHeight / 2000 * calcY() - 45, rotateY: isFlipped() ? 0 : 180 }}
+            animate={{ x: window.innerWidth / 2000 * calcX() - 30*window.innerWidth/1350, y: window.innerHeight / 2000 * calcY() - 45*window.innerHeight/750, rotateY: isFlipped() ? 0 : 180 }}
             transition={{ duration: 0.5 }}
             style={{
                 position: 'absolute',
@@ -208,8 +208,8 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
                 y: window.innerHeight / 2000 * 750 - 45,
                 zIndex: discardTop() ? 1 : 0,
                 rotateY: 180,
-                width: 60,
-                height: 90,
+                width: 60*window.innerWidth/1350,
+                height: 90*window.innerHeight/750,
                 backgroundColor: (playerWhoHas() === CambioCaller) ? 'darkgray' :(isFlipped() ? (number === -1 ? 'darkgray' : 'whitesmoke') : ((gameState === 'locked' || number === 0 || canClick()) ? 'green' : 'darkgray')),
                 color: isFlipped() ? 'black' : 'transparent',
                 display: 'flex',

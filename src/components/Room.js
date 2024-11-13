@@ -144,7 +144,7 @@ const Room = () => {
                         startBurn();
                     }
                 } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
-                    if (roomData.PlayerHands.reduce((count, playerHand) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count}, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count}, 0) !== 0) {
                         setGameState('lookSwap');
                     }
                     else {
@@ -345,6 +345,8 @@ const Room = () => {
 
 
     useEffect(() => {
+        console.log(window.innerWidth);
+        console.log(window.innerHeight);
         if (roomData && roomData.Status === 'in-progress') {
             if (gameState === 'draw') {
                 setDrawnCard(roomData.DrawnCard);
