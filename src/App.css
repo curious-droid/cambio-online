@@ -1,38 +1,288 @@
-.App {
+/* src/App.css */
+* {
+  font-family: 'Source Code Pro';
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1a1d;
+  color: #eaeaea;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.lobby, .room, .game-board {
+  max-width: 600px;
+  margin: 20px auto;
   text-align: center;
+  align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+input, button {
+  padding: 10px;
+  margin: 5px;
+  font-size: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+button:hover {
+  background-color: #45a049;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 100%; /* Increased width for better text fit */
+  text-align: left;
+  color: black; /* Set text color to black */
+  font-size: 0.9rem;
+}
+
+.rules-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.rules-button:hover {
+  background-color: #45a049;
+}
+
+.join-link {
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.copied-message {
+  color: #4caf50;
+  font-size: 1rem;
+  margin-left: 20px;
+}
+.room {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.game-board {
+  display: grid;
+  gap: 10px;
+  grid-template-areas:
+      'draw-pile cards discard-pile'
+      'game-log game-log game-log';
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.games {
+  background-color: #4caf50;
+  display: flex;
+  align-items: center;
+  font-size: 12px;       /* Smaller font size */
+  line-height: 1;      /* Less spacing between lines */
+  padding: 10px;         /* Optional: add some padding */
+  width: 200px;
+  height: 200px;
+  background: #1a1a1d;
+  color: #cccccc;        /* Optional: soft color for readability */
+  /* color: black; */
+  margin: 0 auto;
+  overflow-y: auto;
+  flex-direction: column
+}
+
+/* Custom scrollbar styles */
+.games::-webkit-scrollbar {
+  width: 8px;
+}
+
+.games::-webkit-scrollbar-track {
+  background: #333; /* Dark track to match .game-container */
+  border-radius: 4px;
+}
+
+.games::-webkit-scrollbar-thumb {
+  background-color: #cccccc; /* Matches .top-bar color */
+  border-radius: 4px;
+}
+
+.games::-webkit-scrollbar-thumb:hover {
+  background-color: whitesmoke; /* Lighter green on hover */
+}
+
+input {
+  background-color: #333; /* Dark background for input field */
+  color: #eaeaea; /* Light text color for readability */
+  border: 1px solid #555; /* Subtle border color to fit theme */
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none; /* Removes default blue outline */
+  border-color: #4caf50; /* Adds green border on focus */
+  background-color: #444; /* Slightly different background color on focus */
+}
+
+
+
+
+
+.rainbow-glow {
+  position: relative;
+  font-family: 'Source Code Pro';
+  font-weight: bold;
+  color: #eaeaea;
+  font-size: 1.25rem;
+  transition: color 0.5s ease;
+}
+
+.rainbow-glow:hover {
+  color: #fff;
+  animation: rainbowGlow 2s linear infinite;
+}
+
+.rainbow-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+  background: linear-gradient(85deg, red, orange, yellow, green, blue, indigo, violet, red, orange, yellow, green, blue, indigo, violet, red, orange, yellow, green, blue, indigo, violet, red, orange, yellow, green, blue, indigo, violet, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400%;
+  z-index: -1;
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 0.5s ease;
+}
+
+.rainbow-glow:hover::before {
+  opacity: 0.6;
+  animation: animateGlow 10s linear infinite;
+}
+
+@keyframes animateGlow {
+  0% {
+      background-position: 0% 50%;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+      background-position: 100% 50%;
+  }
+  /* 100% {
+      background-position: 0% 50%;
+  } */
+}
+
+@keyframes rainbowGlow {
+  0% {
+      color: red;
+  }
+  14% {
+      color: orange;
+  }
+  28% {
+      color: yellow;
+  }
+  42% {
+      color: green;
+  }
+  57% {
+      color: blue;
+  }
+  71% {
+      color: indigo;
+  }
+  85% {
+      color: violet;
+  }
+  100% {
+      color: red;
   }
 }
+
+/* 
+.rainbow-glow {
+  font-family: 'Source Code Pro';
+  font-weight: bold;
+  font-size: 1.25rem;
+  background-color: black;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  position: relative;
+}
+
+.rainbow-glow::before {
+  content: 'created by curious-droid'; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  text-shadow:
+      0 0 8px #ff0040,
+      0 0 15px #ffa500,
+      0 0 20px #ffff00,
+      0 0 25px #00ff00,
+      0 0 30px #00ffff,
+      0 0 35px #0000ff,
+      0 0 40px #ff00ff;
+  z-index: -1;
+  animation: glowAnimation 2s linear infinite;
+}
+@keyframes glowAnimation {
+  0% {
+      color: #ff0040;
+      text-shadow: 0 0 8px #ff0040, 0 0 15px #ff0040, 0 0 20px #ff0040;
+  }
+  20% {
+      color: #ffa500;
+      text-shadow: 0 0 8px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500;
+  }
+  40% {
+      color: #ffff00;
+      text-shadow: 0 0 8px #ffff00, 0 0 15px #ffff00, 0 0 20px #ffff00;
+  }
+  60% {
+      color: #00ff00;
+      text-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00;
+  }
+  80% {
+      color: #00ffff;
+      text-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff, 0 0 20px #00ffff;
+  }
+  100% {
+      color: #0000ff;
+      text-shadow: 0 0 8px #0000ff, 0 0 15px #0000ff, 0 0 20px #0000ff;
+  }
+} */
