@@ -119,7 +119,9 @@ const Room = () => {
                 const suitIndex = Math.floor((discarded - 1) / 13);
 
                 if (rankIndex === 6 || rankIndex === 7) {
-                    setGameState('peekSelf');
+                    if(roomData.PlayerHands[roomData.Players.indexOf(username)].cards.length !== 0){
+                        setGameState('peekSelf');
+                    }
                 } else if (rankIndex === 8 || rankIndex === 9) {
                     setGameState('peekOther');
                 } else if (rankIndex === 10 || rankIndex === 11) {
