@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/cambio-online/static/css/main.61852e9f.css",
+    "main.js": "/cambio-online/static/js/main.414a6452.js",
+    "static/js/453.dd4952b5.chunk.js": "/cambio-online/static/js/453.dd4952b5.chunk.js",
+    "static/media/source-code-pro-latin-ext-400-normal.woff": "/cambio-online/static/media/source-code-pro-latin-ext-400-normal.eae6c81546be08111951.woff",
+    "static/media/source-code-pro-latin-400-normal.woff": "/cambio-online/static/media/source-code-pro-latin-400-normal.ec75d7e8758fdd40c6e1.woff",
+    "static/media/source-code-pro-latin-ext-400-normal.woff2": "/cambio-online/static/media/source-code-pro-latin-ext-400-normal.10c18dee3e7a856db081.woff2",
+    "static/media/source-code-pro-latin-400-normal.woff2": "/cambio-online/static/media/source-code-pro-latin-400-normal.cfab30709f780ad1a01a.woff2",
+    "static/media/source-code-pro-cyrillic-400-normal.woff": "/cambio-online/static/media/source-code-pro-cyrillic-400-normal.17dbdcf8ba286c96038d.woff",
+    "static/media/source-code-pro-greek-400-normal.woff": "/cambio-online/static/media/source-code-pro-greek-400-normal.f047e27a3ddf7dc04ee8.woff",
+    "static/media/source-code-pro-cyrillic-400-normal.woff2": "/cambio-online/static/media/source-code-pro-cyrillic-400-normal.58ba5cc58e1de1df233b.woff2",
+    "static/media/source-code-pro-vietnamese-400-normal.woff": "/cambio-online/static/media/source-code-pro-vietnamese-400-normal.c87c7de6edcf8b738270.woff",
+    "static/media/source-code-pro-cyrillic-ext-400-normal.woff": "/cambio-online/static/media/source-code-pro-cyrillic-ext-400-normal.ec9f9b00844cb13d2a57.woff",
+    "static/media/source-code-pro-greek-400-normal.woff2": "/cambio-online/static/media/source-code-pro-greek-400-normal.56098bba2e2c96d340e8.woff2",
+    "static/media/source-code-pro-vietnamese-400-normal.woff2": "/cambio-online/static/media/source-code-pro-vietnamese-400-normal.421a5d71d9d281edc42a.woff2",
+    "static/media/source-code-pro-cyrillic-ext-400-normal.woff2": "/cambio-online/static/media/source-code-pro-cyrillic-ext-400-normal.e1b23467e5092e12f87d.woff2",
+    "static/media/source-code-pro-greek-ext-400-normal.woff": "/cambio-online/static/media/source-code-pro-greek-ext-400-normal.43eebc8c38dbbf4e8f64.woff",
+    "static/media/source-code-pro-greek-ext-400-normal.woff2": "/cambio-online/static/media/source-code-pro-greek-ext-400-normal.2ee4575eb67316ad68ab.woff2",
+    "index.html": "/cambio-online/index.html",
+    "main.61852e9f.css.map": "/cambio-online/static/css/main.61852e9f.css.map",
+    "main.414a6452.js.map": "/cambio-online/static/js/main.414a6452.js.map",
+    "453.dd4952b5.chunk.js.map": "/cambio-online/static/js/453.dd4952b5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.61852e9f.css",
+    "static/js/main.414a6452.js"
+  ]
+}
