@@ -130,21 +130,21 @@ const Room = () => {
                         startBurn();
                     }
                 } else if (rankIndex === 8 || rankIndex === 9) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(username) ? count + playerHand.cards.length : count; }, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return (index !== roomData.Players.indexOf(username) && index !== roomData.Players.indexOf(roomData.CambioCaller)) ? count + playerHand.cards.length : count }, 0) !== 0) {
                         setGameState('peekOther');
                     }
                     else {
                         startBurn();
                     }
                 } else if (rankIndex === 10 || rankIndex === 11) {
-                    if (roomData.PlayerHands.reduce((count, playerHand) => { return count + playerHand.cards.length }, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) !== 0) {
                         setGameState('swap');
                     }
                     else {
                         startBurn();
                     }
                 } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
-                    if (roomData.PlayerHands.reduce((count, playerHand) => { return count + playerHand.cards.length }, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count}, 0) !== 0) {
                         setGameState('lookSwap');
                     }
                     else {
@@ -375,10 +375,11 @@ const Room = () => {
             else if (!roomData.FinishedBurning[roomData.Players.indexOf(username)]) {
                 setGameState('burn');
                 if(roomData.CambioCaller === username){
-                    roomData.FinishedBurning[roomData.Players.indexOf(username)] = false;
-                    updateDoc(doc(db, 'rooms', roomId), {
-                        FinishedBurning: roomData.FinishedBurning
-                    });
+                    handleBurn();
+                    // roomData.FinishedBurning[roomData.Players.indexOf(username)] = false;
+                    // updateDoc(doc(db, 'rooms', roomId), {
+                    //     FinishedBurning: roomData.FinishedBurning
+                    // });
                 }
             }
             else if (((!roomData.FinishedBurning.includes(false)) && (gameState === 'locked' && !roomData.BurnPhase)) && roomData.CurrentPlayer === username) {
