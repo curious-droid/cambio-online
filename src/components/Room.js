@@ -425,7 +425,6 @@ const Room = () => {
         updateDoc(userDoc, { Games: userData.data().Games.filter((game) => game.id !== roomId)});
     }
 
-
     useEffect(() => {
         if (!username) return; // Wait until username is set
         const roomRef = doc(db, 'rooms', roomId);
