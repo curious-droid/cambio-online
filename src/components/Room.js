@@ -345,8 +345,8 @@ const Room = () => {
 
 
     useEffect(() => {
-        console.log(window.innerWidth);
-        console.log(window.innerHeight);
+        // console.log(window.innerWidth);
+        // console.log(window.innerHeight);
         if (roomData && roomData.Status === 'in-progress') {
             if (gameState === 'draw') {
                 setDrawnCard(roomData.DrawnCard);
@@ -418,12 +418,20 @@ const Room = () => {
         }
     }, [roomData, gameState]);
 
+    const leave = async () =>{
+        console.log(username);
+        const userDoc = doc(db, 'users', username);
+        const userData = await getDoc(userDoc);
+        updateDoc(userDoc, { Games: userData.data().Games.filter((game) => game.id !== roomId)});
+    }
+
 
     useEffect(() => {
         if (!username) return; // Wait until username is set
         const roomRef = doc(db, 'rooms', roomId);
-        const unsubscribe = onSnapshot(roomRef, (doc) => {
+        const unsubscribe = onSnapshot(roomRef, async (doc) => {
             if (!doc.exists()) {
+                await leave();
                 navigate('/');
                 return;
             }
