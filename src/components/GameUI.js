@@ -3,7 +3,7 @@ import './CambioUI.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import Card from './Card';
 
-const GameUI = ({ username, roomName, roomUUID, playerHands, flippedCards, discardPile, host, onBurn, onEndGame, onCallCambio, GameLog, gameState, selected, setSelected, drawnCard, onSwap, onNotSwap, FinishedBurning, giveBurn, CambioCalled,doDraw, waitDraw,CambioCaller }) => {
+const GameUI = ({ username, roomName, roomUUID, playerHands, flippedCards, discardPile, host, onBurn, onEndGame, onCallCambio, GameLog, gameState, selected, setSelected, drawnCard, onSwap, onNotSwap, FinishedBurning, giveBurn, CambioCalled,doDraw, waitDraw,CambioCaller,burnReceiver }) => {
   const logEndRef = useRef(null);
   const navigate = useNavigate();
   useEffect(() => {
@@ -51,7 +51,7 @@ const GameUI = ({ username, roomName, roomUUID, playerHands, flippedCards, disca
 
       <div className="main-game">
         <div className="game-log">
-          {/* <h3>Game Log</h3> */}
+          <div>{gameState === 'locked' ? 'Waiting...' : waitDraw ? ('Draw a card.') : gameState === 'draw' ? 'Replace or Discard' : gameState === 'peekSelf' ? 'Look at your own card' : gameState === 'peekOther' ? 'Look at another player\'s card' : gameState === 'swap' ? 'Swap two cards' : gameState === 'lookSwap' ? 'Look at two cards and choose to swap.' : gameState === 'burn' ? (giveBurn ? `Give a card to ${burnReceiver}.` : 'Burn cards.') : ''}</div>
           <div className="log-messages">
             {GameLog && GameLog.length > 0
               ? GameLog.map((message, index) => (

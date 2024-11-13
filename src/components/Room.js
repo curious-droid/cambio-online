@@ -72,15 +72,15 @@ const Room = () => {
     };
 
     const startBurn = async () => {
-        let burn = Array(roomData.Players.length).fill(false);
-        if(roomData.CambioCaller === username){
-            burn[roomData.Players.indexOf(username)] = false;
-        }
+        // let burn = Array(roomData.Players.length).fill(false);
+        // if(roomData.CambioCaller === username){
+        //     burn[roomData.Players.indexOf(username)] = false;
+        // }
         updateDoc(doc(db, 'rooms', roomId), {
-            FinishedBurning: burn,
+            FinishedBurning: Array(roomData.Players.length).fill(false),
             BurnPhase: true
         });
-        setGameState('burn');
+        // setGameState('burn');
     }
 
     async function handleGameState() {
@@ -610,6 +610,7 @@ const Room = () => {
                         doDraw={handleDraw}
                         waitDraw={waitDraw}
                         CambioCaller={roomData.CambioCaller}
+                        burnReceiver={burnReceiver}
                     // cards={{ drawnCard }} // Pass current cards to CambioUI
                     />
                 </ScreenShake>
