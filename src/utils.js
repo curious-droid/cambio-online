@@ -11,5 +11,5 @@ export function numberToCard(number) {
     const rankIndex = (number - 1) % 13;
     const suitIndex = Math.floor((number - 1) / 13);
 
-    return `${ranks[rankIndex]}${suits[suitIndex]}`;
+    return `${ranks[rankIndex]} ${suits[suitIndex]}`;
 }
