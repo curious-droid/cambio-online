@@ -210,7 +210,7 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: (number === 0 || discard.includes(number)) ? 1 : 0.8 }}
         >
-            {isFlipped() ? `${numberToCard()}` : ''}
+            {isFlipped() ? `${numberToCard(number)}` : ''}
         </motion.div>
     );
 };
