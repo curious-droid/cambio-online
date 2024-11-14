@@ -121,33 +121,41 @@ const Room = () => {
 
                 const rankIndex = (discarded - 1) % 13;
                 const suitIndex = Math.floor((discarded - 1) / 13);
-
+                
                 if (rankIndex === 6 || rankIndex === 7) {
-                    if (roomData.PlayerHands[roomData.Players.indexOf(username)].cards.length !== 0) {
+                    if (roomData.PlayerHands[roomData.Players.indexOf(username)].cards.filter(card => card !== -1).length !== 0) {
                         setGameState('peekSelf');
-                    }
-                    else {
+                    } else {
                         startBurn();
                     }
                 } else if (rankIndex === 8 || rankIndex === 9) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return (index !== roomData.Players.indexOf(username) && index !== roomData.Players.indexOf(roomData.CambioCaller)) ? count + playerHand.cards.length : count }, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { 
+                        return (index !== roomData.Players.indexOf(username) && index !== roomData.Players.indexOf(roomData.CambioCaller)) 
+                            ? count + playerHand.cards.filter(card => card !== -1).length 
+                            : count;
+                    }, 0) !== 0) {
                         setGameState('peekOther');
-                    }
-                    else {
+                    } else {
                         startBurn();
                     }
                 } else if (rankIndex === 10 || rankIndex === 11) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) >= 2) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { 
+                        return index !== roomData.Players.indexOf(roomData.CambioCaller) 
+                            ? count + playerHand.cards.filter(card => card !== -1).length 
+                            : count;
+                    }, 0) >= 2) {
                         setGameState('swap');
-                    }
-                    else {
+                    } else {
                         startBurn();
                     }
                 } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) >= 2) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { 
+                        return index !== roomData.Players.indexOf(roomData.CambioCaller) 
+                            ? count + playerHand.cards.filter(card => card !== -1).length 
+                            : count;
+                    }, 0) >= 2) {
                         setGameState('lookSwap');
-                    }
-                    else {
+                    } else {
                         startBurn();
                     }
                 } else {
