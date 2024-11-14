@@ -163,7 +163,7 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
                 }
                 else {
                     const playernum = playerDecks.indexOf(player) - (currentPlayerIndex() < playerDecks.indexOf(player) ? 1 : 0) - (playerDecks.length - 2) / 2.0;
-                    return 1000 + 370 * playernum + 50 * (player.cards.indexOf(number) >= 4 ? 3 + 2 * (player.cards.indexOf(number) - 4) : dx[player.cards.indexOf(number)]);
+                    return 1000 + 370 * playernum - 50 * (player.cards.indexOf(number) >= 4 ? 3 + 2 * (player.cards.indexOf(number) - 4) : dx[player.cards.indexOf(number)]);
                 }
             }
         }
@@ -185,7 +185,7 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
                     return 1150 + 130 * (player.cards.indexOf(number) >= 4 ? +1 : dy[player.cards.indexOf(number)]);
                 }
                 else {
-                    return 200 + 130 * (player.cards.indexOf(number) >= 4 ? +1 : dy[player.cards.indexOf(number)]);
+                    return 200 - 130 * (player.cards.indexOf(number) >= 4 ? +1 : dy[player.cards.indexOf(number)]);
                 }
             }
         }

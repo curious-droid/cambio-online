@@ -53,15 +53,13 @@ const GameUI = ({ username, roomName, roomUUID, playerHands, flippedCards, disca
         <div className="game-log">
         <div
     style={{
-        fontSize: '1.2rem',         // Increase font size for visibility
+        fontSize: '1.1rem',         // Increase font size for visibility
         fontWeight: 'bold',          // Make the text bold
         color: '#FFFFFF',            // Set the text color to white for good contrast
         backgroundColor: '#4caf50',  // Use a green background for attention
-        padding: '10px 20px',        // Add padding around the text
         borderRadius: '8px',         // Rounded corners
         boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',  // Add a subtle shadow for depth
         textAlign: 'center',         // Center-align the text
-        margin: '20px auto',         // Add space around the div and center it horizontally
         maxWidth: '400px',           // Limit the width so it doesn't span too wide
     }}
 >

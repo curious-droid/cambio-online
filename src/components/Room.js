@@ -137,14 +137,14 @@ const Room = () => {
                         startBurn();
                     }
                 } else if (rankIndex === 10 || rankIndex === 11) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) >= 2) {
                         setGameState('swap');
                     }
                     else {
                         startBurn();
                     }
                 } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) !== 0) {
+                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { return index !== roomData.Players.indexOf(roomData.CambioCaller) ? count + playerHand.cards.length : count }, 0) >= 2) {
                         setGameState('lookSwap');
                     }
                     else {
@@ -486,10 +486,10 @@ const Room = () => {
 
     const startGame = async () => {
         if (roomData && roomData.Host === username) {
-            if (roomData.Players.length < 2) {
-                alert('Must have at least two players to start game.')
-                return;
-            }
+            // if (roomData.Players.length < 2) {
+            //     alert('Must have at least two players to start game.')
+            //     return;
+            // }
             const existingNumbers = new Set();
             const playerHands = roomData.Players.map((player) => ({
                 id: player,
