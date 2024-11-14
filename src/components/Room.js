@@ -164,6 +164,9 @@ const Room = () => {
                         startBurn();
                     }
                 }
+                else{
+                    startBurn();
+                }
             }
             else {
                 if (drawnCard === 0) {
