@@ -11,7 +11,7 @@ const GameUI = ({ username, roomName, roomUUID, playerHands, flippedCards, disca
   }, [GameLog]);
 
 
-  const cardComponents = Array.from({ length: 52 }, (_, index) => (
+  const cardComponents = Array.from({ length: 54 }, (_, index) => (
     <Card
       key={index + 1} // Ensure a unique key for each component
       number={index + 1}

@@ -1,6 +1,7 @@
 // Card.js
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { numberToCard } from '../utils.js';
 
 const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected, setSelected, flippedCards, drawnCard, giveBurn,doDraw, waitDraw, CambioCaller }) => {
     // const [isFlipped, setIsFlipped] = useState(false);
@@ -22,20 +23,6 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
         }
         return null;
     }
-
-    function numberToCard() {
-        if (number === -1) {
-            return 'Empty';
-        }
-        const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-        const suits = ["♣️", "♦️", "♥️", "♠️"];
-
-        const rankIndex = (number - 1) % 13;
-        const suitIndex = Math.floor((number - 1) / 13);
-
-        return `${ranks[rankIndex]} ${suits[suitIndex]}`;
-    }
-
 
     const canClick = () => {
         if(number === 0 && waitDraw){
@@ -200,7 +187,7 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
             onClick={() => {
                 handleClick();
             }}
-            animate={{ x: window.innerWidth / 2000 * calcX() - 30*window.innerWidth/1350, y: window.innerHeight / 2000 * calcY() - 45*window.innerHeight/750, rotateY: isFlipped() ? 0 : 180 }}
+            animate={{ x: window.innerWidth / 2000 * calcX() - 30, y: window.innerHeight / 2000 * calcY() - 45, rotateY: isFlipped() ? 0 : 180 }}
             transition={{ duration: 0.5 }}
             style={{
                 position: 'absolute',
@@ -208,8 +195,8 @@ const Card = ({ number, discard, currentPlayer, playerDecks, gameState, selected
                 y: window.innerHeight / 2000 * 750 - 45,
                 zIndex: discardTop() ? 1 : 0,
                 rotateY: 180,
-                width: 60*window.innerWidth/1350,
-                height: 90*window.innerHeight/750,
+                width: 60,
+                height: 90,
                 backgroundColor: (playerWhoHas() === CambioCaller) ? 'darkgray' :(isFlipped() ? (number === -1 ? 'darkgray' : 'whitesmoke') : ((gameState === 'locked' || number === 0 || canClick()) ? 'green' : 'darkgray')),
                 color: isFlipped() ? 'black' : 'transparent',
                 display: 'flex',

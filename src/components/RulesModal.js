@@ -44,7 +44,7 @@ const RulesModal = ({ isOpen, onClose }) => {
             </p>
             <h3>Setup</h3>
             <p>
-              Use a standard 52-card deck. Each player receives 4 cards face down in a 2x2 grid. Players may look at the 2 cards closest to them. The first player is decided randomly, and subsequent rounds start with the previous round's winner.
+              Use a standard 54-card deck. Each player receives 4 cards face down in a 2x2 grid. Players may look at the 2 cards closest to them. The first player is decided randomly, and subsequent rounds start with the previous round's winner.
             </p>
             <h3>Play</h3>
             <p>

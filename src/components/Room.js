@@ -56,7 +56,7 @@ const Room = () => {
     const drawCard = async () => {
         const usedCards = new Set((roomData.Discard ? roomData.Discard : []).concat(...roomData.PlayerHands.map(player => player.cards)));
 
-        if (usedCards.size >= 52) {
+        if (usedCards.size >= 54) {
             await updateDoc(doc(db, 'rooms', roomId), {
                 Discard: [-1],
                 GameLog: [...roomData.GameLog, 'Draw deck reshuffled.']
@@ -64,9 +64,9 @@ const Room = () => {
             roomData.Discard = [-1];
         }
 
-        let card = Math.floor(Math.random() * 52) + 1;
+        let card = Math.floor(Math.random() * 54) + 1;
         while (cardExists(card)) {
-            card = Math.floor(Math.random() * 52) + 1;
+            card = Math.floor(Math.random() * 54) + 1;
         }
         return card;
     };
@@ -119,47 +119,50 @@ const Room = () => {
                     });
                 }
 
-                const rankIndex = (discarded - 1) % 13;
-                const suitIndex = Math.floor((discarded - 1) / 13);
-                
-                if (rankIndex === 6 || rankIndex === 7) {
-                    if (roomData.PlayerHands[roomData.Players.indexOf(username)].cards.filter(card => card !== -1).length !== 0) {
-                        setGameState('peekSelf');
+
+                if (discarded <= 52) {
+                    const rankIndex = (discarded - 1) % 13;
+                    const suitIndex = Math.floor((discarded - 1) / 13);
+
+                    if (rankIndex === 6 || rankIndex === 7) {
+                        if (roomData.PlayerHands[roomData.Players.indexOf(username)].cards.filter(card => card !== -1).length !== 0) {
+                            setGameState('peekSelf');
+                        } else {
+                            startBurn();
+                        }
+                    } else if (rankIndex === 8 || rankIndex === 9) {
+                        if (roomData.PlayerHands.reduce((count, playerHand, index) => {
+                            return (index !== roomData.Players.indexOf(username) && index !== roomData.Players.indexOf(roomData.CambioCaller))
+                                ? count + playerHand.cards.filter(card => card !== -1).length
+                                : count;
+                        }, 0) !== 0) {
+                            setGameState('peekOther');
+                        } else {
+                            startBurn();
+                        }
+                    } else if (rankIndex === 10 || rankIndex === 11) {
+                        if (roomData.PlayerHands.reduce((count, playerHand, index) => {
+                            return index !== roomData.Players.indexOf(roomData.CambioCaller)
+                                ? count + playerHand.cards.filter(card => card !== -1).length
+                                : count;
+                        }, 0) >= 2) {
+                            setGameState('swap');
+                        } else {
+                            startBurn();
+                        }
+                    } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
+                        if (roomData.PlayerHands.reduce((count, playerHand, index) => {
+                            return index !== roomData.Players.indexOf(roomData.CambioCaller)
+                                ? count + playerHand.cards.filter(card => card !== -1).length
+                                : count;
+                        }, 0) >= 2) {
+                            setGameState('lookSwap');
+                        } else {
+                            startBurn();
+                        }
                     } else {
                         startBurn();
                     }
-                } else if (rankIndex === 8 || rankIndex === 9) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { 
-                        return (index !== roomData.Players.indexOf(username) && index !== roomData.Players.indexOf(roomData.CambioCaller)) 
-                            ? count + playerHand.cards.filter(card => card !== -1).length 
-                            : count;
-                    }, 0) !== 0) {
-                        setGameState('peekOther');
-                    } else {
-                        startBurn();
-                    }
-                } else if (rankIndex === 10 || rankIndex === 11) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { 
-                        return index !== roomData.Players.indexOf(roomData.CambioCaller) 
-                            ? count + playerHand.cards.filter(card => card !== -1).length 
-                            : count;
-                    }, 0) >= 2) {
-                        setGameState('swap');
-                    } else {
-                        startBurn();
-                    }
-                } else if (rankIndex === 12 && (suitIndex === 0 || suitIndex === 3)) {
-                    if (roomData.PlayerHands.reduce((count, playerHand, index) => { 
-                        return index !== roomData.Players.indexOf(roomData.CambioCaller) 
-                            ? count + playerHand.cards.filter(card => card !== -1).length 
-                            : count;
-                    }, 0) >= 2) {
-                        setGameState('lookSwap');
-                    } else {
-                        startBurn();
-                    }
-                } else {
-                    startBurn();
                 }
             }
             else {
@@ -227,8 +230,8 @@ const Room = () => {
                 }
                 else {
                     const card = selected[0];
-                    const discardIndex = (roomData.Discard[roomData.Discard.length - 1] - 1) % 13;
-                    const rankIndex = (card - 1) % 13;
+                    const discardIndex = roomData.Discard[roomData.Discard.length - 1] >= 53 ? 53 : (roomData.Discard[roomData.Discard.length - 1] - 1) % 13;
+                    const rankIndex = card >= 53 ? 53 : (card - 1) % 13;
                     if (discardIndex === rankIndex) {
                         let burner = username;
                         for (const player of roomData.PlayerHands) {
@@ -339,6 +342,9 @@ const Room = () => {
     }
 
     const value = (number) => {
+        if(number >= 53){
+            return 0;
+        }
 
         const rankIndex = (number - 1) % 13;
         const suitIndex = Math.floor((number - 1) / 13);
@@ -372,22 +378,22 @@ const Room = () => {
                 const minScoreIndices = scores
                     .map((score, index) => (score === minScore ? index : -1))
                     .filter(index => index !== -1);
-                
+
                 const cambioCallerIndex = roomData.Players.indexOf(roomData.CambioCaller);
-                
+
                 let winnerIndex = minScoreIndices.reduce((closestIndex, currentIndex) => {
                     const closestDistance = (closestIndex - cambioCallerIndex + roomData.Players.length) % roomData.Players.length;
                     const currentDistance = (currentIndex - cambioCallerIndex + roomData.Players.length) % roomData.Players.length;
                     return currentDistance < closestDistance ? currentIndex : closestIndex;
                 }, minScoreIndices[0]);
-                
-                
+
+
                 updateDoc(doc(db, 'rooms', roomId), {
                     LastWinner: roomData.Players[winnerIndex],
                     GameLog: [...roomData.GameLog, `${roomData.Players[winnerIndex]} won the game!`],
                     Status: 'ended'
                 });
-                
+
                 return;
             }
 
@@ -483,7 +489,7 @@ const Room = () => {
     const generateHand = (existingNumbers) => {
         const hand = [];
         while (hand.length < 4) {
-            const card = Math.floor(Math.random() * 52) + 1;
+            const card = Math.floor(Math.random() * 54) + 1;
             if (!existingNumbers.has(card)) {
                 hand.push(card);
                 existingNumbers.add(card);

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Confetti from 'react-confetti';
 import { FaCrown } from 'react-icons/fa';
+import { numberToCard } from '../utils.js';
 
 const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onReturnToLobby }) => {
     const [showConfetti, setShowConfetti] = useState(true);
@@ -10,7 +11,7 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
     const navigate = useNavigate();
 
     const value = (number) => {
-        if (number === -1) {
+        if (number === -1 || number >= 53) {
             return 0;
         }
         const rankIndex = (number - 1) % 13;
@@ -24,17 +25,6 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
         }
         return rankIndex + 1;
     };
-
-    function numberToCard(number) {
-        if (number === -1) {
-            return 'Empty';
-        }
-        const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-        const suits = ["♣️", "♦️", "♥️", "♠️"];
-        const rankIndex = (number - 1) % 13;
-        const suitIndex = Math.floor((number - 1) / 13);
-        return `${ranks[rankIndex]} ${suits[suitIndex]}`;
-    }
 
     const handleAnimationComplete = () => {
         setRevealWinner(true);
