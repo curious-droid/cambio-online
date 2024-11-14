@@ -302,12 +302,13 @@ const Room = () => {
             PlayerHands: roomData.PlayerHands,
         });
 
-        startBurn();
         setSelected([]);
+        startBurn();
     }
 
     const onNotSwap = () => {
         setFlippedCards([]);
+        setSelected([]);
         startBurn();
     }
 

@@ -51,7 +51,31 @@ const GameUI = ({ username, roomName, roomUUID, playerHands, flippedCards, disca
 
       <div className="main-game">
         <div className="game-log">
-          <div>{waitDraw ? ('Draw a card.') : gameState === 'draw' ? 'Replace or Discard.' : gameState === 'peekSelf' ? 'Look at your own card.' : gameState === 'peekOther' ? 'Look at another player\'s card.' : gameState === 'swap' ? 'Swap two cards.' : gameState === 'lookSwap' ? 'Look at two cards and choose to swap.' : gameState === 'burn' ? (giveBurn ? `Give a card to ${burnReceiver}.` : 'Burn cards.') : gameState === 'locked' ? 'Waiting...' : ''}</div>
+        <div
+    style={{
+        fontSize: '1.2rem',         // Increase font size for visibility
+        fontWeight: 'bold',          // Make the text bold
+        color: '#FFFFFF',            // Set the text color to white for good contrast
+        backgroundColor: '#4caf50',  // Use a green background for attention
+        padding: '10px 20px',        // Add padding around the text
+        borderRadius: '8px',         // Rounded corners
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',  // Add a subtle shadow for depth
+        textAlign: 'center',         // Center-align the text
+        margin: '20px auto',         // Add space around the div and center it horizontally
+        maxWidth: '400px',           // Limit the width so it doesn't span too wide
+    }}
+>
+    {waitDraw ? 'Draw a card.' 
+    : gameState === 'draw' ? 'Replace or Discard.' 
+    : gameState === 'peekSelf' ? 'Look at your own card.' 
+    : gameState === 'peekOther' ? 'Look at another player\'s card.' 
+    : gameState === 'swap' ? 'Swap two cards.' 
+    : gameState === 'lookSwap' ? 'Look at two cards and choose to swap.' 
+    : gameState === 'burn' ? (giveBurn ? `Give a card to ${burnReceiver}.` : FinishedBurning[playerHands.indexOf(playerHands.find(player => player.id === username))] ? 'Waiting...' : 'Burn cards.') 
+    : gameState === 'locked' ? 'Waiting...' 
+    : ''}
+</div>
+
           <div className="log-messages">
             {GameLog && GameLog.length > 0
               ? GameLog.map((message, index) => (

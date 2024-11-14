@@ -101,7 +101,7 @@ const Lobby = () => {
                 <button onClick={handleCreateRoom}>Create Room</button>
             </div>
             <div>
-                <input placeholder="Room Code" value={roomUUID} onChange={(e) => setRoomUUID(e.target.value)} />
+                <input placeholder="Join Code" value={roomUUID} onChange={(e) => setRoomUUID(e.target.value)} />
                 <button onClick={handleJoinRoom}>Join Room</button>
             </div>
 

@@ -97,7 +97,7 @@ const EndGameScreen = ({ roomData, username, onReturnToRoom, shaky, winner, onRe
                                 }} />
                             )}
                             <h3>{roomData.Players[index]}</h3>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', flexGrow: 1 }}>
                                 {player.cards.map((card, cardIndex) => (
                                     (card !== -1 && <motion.div
                                         key={cardIndex}
